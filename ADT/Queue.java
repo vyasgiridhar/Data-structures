@@ -1,4 +1,4 @@
-package ADTs;
+package ADT;
  
 public class Queue{
 	private Node head;
@@ -38,5 +38,5 @@ public class Queue{
 		}
 		System.out.println("END");
 	}
-	
+
 }
