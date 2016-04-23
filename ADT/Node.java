@@ -2,15 +2,15 @@ package ADT;
 
 public class Node<K>{
 	
-	private K data;
+	private D data;
 	private Node next;
 
-	public Node(K data,Node next){
+	public Node(D data,Node next){
 		this.data = data;
 		this.next = next;
 	}
 
-	public K getData(){
+	public D getData(){
 		return this.data;
 	}
 
