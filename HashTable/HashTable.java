@@ -1,26 +1,26 @@
-package ADT;
+package HashTable;
 
 public class HashTable<D,V> {
 
     public class Entry<D,V>{
 
-        private D key;
+        private D Key;
         private V value;
 
-        public Entry(D key,V value){
+        public Entry(D Key,V value){
 
-            this.key = key;
+            this.Key = Key;
             this.value = value;
 
         }
 
         public D getKey(){
 
-        	return this.key;
+        	return this.Key;
         
         }
 
-        publiv V getValue(){
+        public V getValue(){
 
         	return this.value;
         
@@ -32,21 +32,21 @@ public class HashTable<D,V> {
         
         }
 
-        public boolean matchBoth(D key, V value){
+        public boolean matchBoth(D Key, V value){
 
-        	return(this.key==key && this.value == value);
+        	return(this.Key==Key && this.value == value);
         
         }
 
-        public boolean matchKey(K key){
+        public boolean matchKey(D Key){
             
-            if(key.getClass()==this.key.getClass()){
+            if(Key.getClass()==this.Key.getClass()){
             
-                if(key instanceof Double || key instanceof Float){
-                    return key.toString().equals(this.key.toString());
+                if(Key instanceof Double || Key instanceof Float){
+                    return Key.toString().equals(this.Key.toString());
                 }
                 else{
-                    return key==this.key;
+                    return Key==this.Key;
                 }
             }
             return false;
@@ -56,14 +56,14 @@ public class HashTable<D,V> {
         public String toString(){
         	String returnStr = "";
 
-        	if(this.key instanceof String){
-        		returnStr += ("\""+ this.key + "\"");
+        	if(this.Key instanceof String){
+        		returnStr += ("\""+ this.Key + "\"");
         	}
-        	else if(this.key instanceof Character){
-        		returnStr +=("'" + this.key + "':");
+        	else if(this.Key instanceof Character){
+        		returnStr +=("'" + this.Key + "':");
         	}
             else{
-                returnStr += (this.key+": ");
+                returnStr += (this.Key+": ");
             }
             if(this.value instanceof String){
                 returnStr += ("\""+this.value+"\"");
