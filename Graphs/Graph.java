@@ -106,4 +106,51 @@ public class AdjacencyList<K>{
         }
         return null;
     }
+
+    public void printBFS(K source){
+    	Vertex src = this.findVertex(source);
+        
+        if(src==null){
+        
+            this.missingVertex(source);
+            return;
+        }
+        
+        System.out.println("Traversing graph BFS starting from "+src.getName());
+        System.out.print(this.traverseBFS(src));
+    }
+
+    public String traverseBFS(Vertex src){
+    	
+    	String BFS = "";
+    	Queue<Vertec> q = new LinkedLIst<>();
+    	for(Vertex v:this.vertexList){
+    		v.unexplore();
+    		v.clearDistance();
+    		v.clearPredecessor();
+    	}
+    	src.visit();
+    	src.setDistance(0);
+    	q.add(src);
+    	Vertex current = q.poll();
+    	Vertex last = current;
+    	while(current!=null){
+    		BFS+=current.getName()+"\n";
+    		for(Edge e:current.getEdges()){
+    			Vertex v = e.getDest();
+    			if(!v.visited() || v.getDistance()>current.getDistance()+e.getWeight()){
+    				q.add(v);
+    				v.visit();
+    				v.setPredecessor(current);
+    				v.setDistance(current.getDistance()+e.getWeight());
+    			}
+    		}
+    		current.explore();
+    		current = q.poll();
+    		if(current!=null){
+    			last = current;
+    		}
+    	}	
+    return BFS;
+    }
 }
