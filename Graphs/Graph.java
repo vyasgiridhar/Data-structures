@@ -153,4 +153,42 @@ public class AdjacencyList<K>{
     	}	
     return BFS;
     }
+    public void printDFS(){
+    
+        this.print = true;
+        this.traverseDFS();
+    }
+    private void traverseDFS(){
+    
+        for(Vertex v:this.vertexList){
+            v.unexplore();
+            v.clearDistance();
+            v.clearPredecessor();            
+        }
+    
+        if(this.print)System.out.println("Traversing graph DFS:");
+    
+        for(Vertex v:this.vertexList){
+            if(!v.visited()){
+                this.DFS(v);
+            }
+        }
+    
+        if(this.print)System.out.println();
+    }
+    private void DFS(Vertex source){
+    	source.visit();
+    	if(this.print)System.out.print("("+source.getName()+" ");
+    	for(Edge e:source.getEdges()){
+    		if(!e.getDest().visited()){
+    			this.DFS(e.getDest());
+    		}
+    		else if(e.getDest().visited() && !e.getDest().explored()){
+    			this.cycleExists = true;
+    		}
+    		else{
+    			
+    		}
+    	}
+    }
 }
