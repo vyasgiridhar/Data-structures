@@ -187,11 +187,8 @@ public class AdjacencyList<K>{
     			this.cycleExists = true;
     		}
     		else{
-    			if(e.getDest().explored()&& e.getDest.explored()){
-    				System.out.println("Back edge exists");
-    			}
-    			else{
-    				
+    			if(e.getDest().visited()&& e.getDest.explored()){
+    				System.out.println("Forward edge exists");
     			}
     		}
     	}
