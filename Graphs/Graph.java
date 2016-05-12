@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 public class AdjacencyList<K>{
 
@@ -21,8 +22,12 @@ public class AdjacencyList<K>{
 
 	public void addVertex(K name){
 		if (this.findVertex(name) != null){
-			System.out.print
+			System.out.println("Already Exists");
 		}
+		else{
+            this.vertexList.add(new Vertex(name.toString()));
+        }
+		
 	}
 	
 	public void addEdge(K src,K dest, int weight){
@@ -176,21 +181,176 @@ public class AdjacencyList<K>{
     
         if(this.print)System.out.println();
     }
+    
     private void DFS(Vertex source){
+    
     	source.visit();
+    
     	if(this.print)System.out.print("("+source.getName()+" ");
+    
     	for(Edge e:source.getEdges()){
+    
     		if(!e.getDest().visited()){
     			this.DFS(e.getDest());
+    
     		}
     		else if(e.getDest().visited() && !e.getDest().explored()){
     			this.cycleExists = true;
+    
     		}
     		else{
     			if(e.getDest().visited()&& e.getDest.explored()){
     				System.out.println("Forward edge exists");
+    
     			}
     		}
     	}
+    	        source.explore();
+        if(this.print)System.out.print(" "+source.getName()+")");
     }
+
+    public AdjacencyList copyGraph(){
+
+        System.out.println("Copying graph");
+
+        AdjacencyList copy = new AdjacencyList();
+
+        for(Vertex v:this.vertexList){
+
+            v.unexplore();
+            v.clearDistance();
+            v.clearPredecessor();            
+
+        }
+
+        for(Vertex v:this.vertexList){
+
+            if(!v.visited()){
+
+                System.out.println("Copying vertex: "+v.getName());
+                copy.addVertex(v.getName());
+                this.copyVertex(copy,v);
+
+            }
+        }
+
+        return copy;
+    }
+
+    private void copyVertex(AdjacencyList copy, Vertex source){
+
+        source.visit();
+
+        for(Edge e:source.getEdges()){
+
+            if(!e.getDest().visited()){
+
+                System.out.println("Copying vertex: "+e.getDest().getName());
+                copy.addVertex(e.getDest().getName());
+                System.out.println("Copying edge from: "+source.getName()+" to "+ e.getDest().getName());
+                copy.addEdge(source.getName(), e.getDest().getName(), e.getWeight());
+                this.copyVertex(copy,e.getDest());
+            }
+            else{
+                System.out.println("Copying edge from: "+source.getName()+" to "+ e.getDest().getName());
+                copy.addEdge(source.getName(), e.getDest().getName(), e.getWeight());
+            }
+        }
+        source.explore();
+    }
+
+    public void deleteGraph(){
+    
+        System.out.println("Deleting Graph");
+    
+        while(!this.vertexList.isEmpty()){
+    
+            Vertex v = this.vertexList.get(0);
+            System.out.println("Deleting "+v.getName());
+            this.removeVertex((K) v.getName());
+        }
+    }
+   
+    public void printVertexList(){
+   
+        for(Vertex v:this.vertexList){
+   
+            System.out.println(v);
+        }
+    }
+   
+    public void computeShortestPath(K source, K destination){
+   
+        System.out.print("Shortest Path from "+source.toString()+" to "+destination.toString()+" is: ");
+        Vertex src = this.findVertex(source);
+        Vertex dest = this.findVertex(destination);
+   
+        if(src==null){
+   
+            this.missingVertex(source);
+            return;
+        }
+   
+        if(dest==null){
+   
+            this.missingVertex(destination);
+            return;
+        }
+   
+        this.traverseBFS(src);
+        this.printShortestPath(src,dest);
+        System.out.println();
+    }
+
+    private void printShortestPath(Vertex src, Vertex dest) {
+        System.out.print(dest.getName()+"<-");
+        if(dest.getPredecessor()==null){
+            System.out.println("No path from "+src.getName()+" to "+dest.getName()+" exists!");
+            return;
+        }
+        else if(dest.getPredecessor()==src){
+            System.out.print(src.getName());
+        }
+        else{
+            this.printShortestPath(src, dest.getPredecessor());
+        }
+    }
+    public boolean isDAG(){
+        this.print = false;
+        this.traverseDFS();
+        return !this.cycleExists;
+    }
+
+    public void getPrims(Vertex start){
+    	final Set<Vertex> unvisited = new HashSet<Vertex> ();
+        unvisited.addAll(this.vertexList);
+
+        unvisited.remove(start);
+
+        List<Vertex> path = new ArrayList<Vertex>();
+        Queue<Vertex.Edge> edgesAvaliable  = new PriorityQueue<Vertex.Edge>();  
+
+        Vertex vertex  = start;
+        while(!unvisited.isEmpty()){
+
+        	System.out.println(vertex);
+        	
+        	for (Vertex.Edge e:vertex.getEdges()){
+        	
+        		if(!unvisited.contains(e.getDest())){
+        			edgesAvaliable.add(e);
+        		}
+        	
+        	}
+
+            Vertex.Edge e = edgesAvailable.remove();
+            cost += e.getCost();
+            path.add(e); 	
+            
+            vertex = e.getDest();
+            unvisited.remove(vertex); 
+
+        }
+	}
+
 }

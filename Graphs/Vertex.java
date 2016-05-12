@@ -1,11 +1,10 @@
 package Graphs;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Vertex{
 	
-	public class Edge{
+	public class Edge implements Comparable<Edge>{
 	
 		private Vertex dest;
 		private int weight;
@@ -32,7 +31,12 @@ public class Vertex{
             String returnStr = "->"+this.dest.getName();
             return returnStr;
         }
-	}
+        
+        public int compareTo(Edge d){
+            return ((this.weight).compareTo(d.weight) && ((this.dest).compareTo(d.dest)));
+        }
+
+    }
 
 	private String name;
 	private List<Edge> next;
