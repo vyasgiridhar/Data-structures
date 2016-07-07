@@ -1,48 +1,48 @@
 package Graphs;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Vertex{
-	
-	public class Edge implements Comparable<Edge>{
-	
+public class Vertex {
+
+    public class Edge{
+
 		private Vertex dest;
-		private int weight;
-		
-		public Edge (Vertex dest,int weight){
-			this.dest = dest;
-			this.weight = weight;
-					
-		}
+        private int weight;
+
+		public Edge(Vertex dest, int weight){
+           this.dest = dest;
+           this.weight = weight;
+        }
 
 		public Vertex getDest(){
-			return this.dest;
-		}
+            return this.dest;
+        }
 
 		public int getWeight(){
-			return this.weight;
-		}
-        
-        public void updateWeight(int weight){
+            return this.weight;
+        }
+
+		public void updateWeight(int weight){
             this.weight = weight;
         }
-        @Override
+
+		@Override
         public String toString(){
             String returnStr = "->"+this.dest.getName();
             return returnStr;
         }
-        
-        public int compareTo(Edge d){
-            return ((this.weight).compareTo(d.weight) && ((this.dest).compareTo(d.dest)));
-        }
 
-    }
+	}
 
 	private String name;
-	private List<Edge> next;
-	private byte visit;
+    private List<Edge> next;
+
+	//For exploration 0 - not visited, 1 - visted, not explored, 2 - explored
+    private byte visit;
+
 	private Vertex predecessor;
-	private int distance;
+    private int distance;
 
     public Vertex(String name){
         this.name = name;
@@ -52,7 +52,7 @@ public class Vertex{
         this.predecessor = null;
     }
 
-    @Override
+	@Override
     public String toString(){
         String returnStr = "";
         returnStr += this.name + " -> ";
@@ -68,15 +68,15 @@ public class Vertex{
         return returnStr;
     }
 
-    public void print(){
+	public void print(){
         System.out.println("Vertex "+this.name+" Distance: "+this.distance);
     }
-    
-    public void addEdge(Vertex dest, int weight){
+
+	public void addEdge(Vertex dest, int weight){
         this.next.add(new Edge(dest,weight));
     }
-    
-    public Edge findEdge(Vertex dest){
+
+	public Edge findEdge(Vertex dest){
         for(Edge e:this.next){
             if(e.getDest()==dest){
                 return e;
@@ -85,78 +85,78 @@ public class Vertex{
         return null;
     }
 
-    public void updateEdge(Vertex y, int weight){
-    	for (Edge e:this.next){
-    		if(e.getDest()==y){
-    			e.updateWeight(weight);
-    		}
-    	}
+	public void updateEdge(Vertex y, int weight) {
+        for(Edge e:this.next){
+            if(e.getDest()==y){
+                e.updateWeight(weight);
+            }
+        }
     }
 
-    public void removeEdge(Vertex dest){
-    	Edge remove = null;
-    	for(Edge e:this.next){
-    		if(e.getDest()==dest){
-    			remove = e;
-    			break;
-    		}
-    	}
-    	this.next.remove(remove);	
+	public void removeEdge(Vertex dest){
+        Edge removeMe = null;
+        for(Edge e:this.next){
+            if(e.getDest()==dest){
+                removeMe = e;
+                break;
+            }
+        }
+        this.next.remove(removeMe);
     }
-    
-    public void removeAllEdges() {
+
+	public void removeAllEdges() {
         this.next.clear();
     }
-    
-    public String getName(){
+
+	public String getName(){
         return this.name;
     }
-    
-    public List<Edge> getEdges(){
+
+	public List<Edge> getEdges(){
         return this.next;
     }
-    
-    public void unexplore(){
+
+	public void unexplore(){
         this.visit = 0;
     }
-    
-    public boolean visited(){
+
+	public boolean visited(){
         return (this.visit==1 || this.visit ==2);
     }
-    
-    public boolean explored(){
+
+	public boolean explored(){
         return this.visit==2;
     }
-    
-    public void visit(){
+
+	public void visit(){
         this.visit = 1;
     }
-    
-    public void explore(){
+
+	public void explore(){
         this.visit = 2;
     }
-    
-    public void clearDistance(){
+
+	public void clearDistance(){
         this.distance = Integer.MAX_VALUE;
     }
-    
-    public void setDistance(int dist){
+
+	public void setDistance(int dist){
         this.distance = dist;
     }
-    
-    public int getDistance(){
+
+	public int getDistance(){
         return this.distance;
     }
-    
-    public void clearPredecessor(){
+
+	public void clearPredecessor(){
         this.predecessor = null;
     }
-    
-    public void setPredecessor(Vertex pre){
+
+	public void setPredecessor(Vertex pre){
         this.predecessor = pre;
     }
-    
-    public Vertex getPredecessor(){
+
+	public Vertex getPredecessor(){
         return this.predecessor;
     }
 
