@@ -27,9 +27,9 @@ public class AdjacencyList<K>{
 		else{
             this.vertexList.add(new Vertex(name.toString()));
         }
-		
+
 	}
-	
+
 	public void addEdge(K src,K dest, int weight){
 		Vertex x = this.findVertex(src);
 		Vertex y = this.findVertex(dest);
@@ -60,7 +60,7 @@ public class AdjacencyList<K>{
             this.vertexList.remove(x);
         }
     }
-    
+
     public void removeEdge(K src, K dest){
         Vertex x = this.findVertex(src);
         Vertex y = this.findVertex(dest);
@@ -102,7 +102,7 @@ public class AdjacencyList<K>{
             this.missingVertex(src);
         }
     }
-    
+
     private Vertex findVertex(K name){
         for(Vertex v: this.vertexList){
             if(v.getName().equals(name.toString())){
@@ -114,19 +114,19 @@ public class AdjacencyList<K>{
 
     public void printBFS(K source){
     	Vertex src = this.findVertex(source);
-        
+
         if(src==null){
-        
+
             this.missingVertex(source);
             return;
         }
-        
+
         System.out.println("Traversing graph BFS starting from "+src.getName());
         System.out.print(this.traverseBFS(src));
     }
 
     public String traverseBFS(Vertex src){
-    	
+
     	String BFS = "";
     	Queue<Vertec> q = new LinkedLIst<>();
     	for(Vertex v:this.vertexList){
@@ -155,53 +155,53 @@ public class AdjacencyList<K>{
     		if(current!=null){
     			last = current;
     		}
-    	}	
+    	}
     return BFS;
     }
     public void printDFS(){
-    
+
         this.print = true;
         this.traverseDFS();
     }
     private void traverseDFS(){
-    
+
         for(Vertex v:this.vertexList){
             v.unexplore();
             v.clearDistance();
-            v.clearPredecessor();            
+            v.clearPredecessor();
         }
-    
+
         if(this.print)System.out.println("Traversing graph DFS:");
-    
+
         for(Vertex v:this.vertexList){
             if(!v.visited()){
                 this.DFS(v);
             }
         }
-    
+
         if(this.print)System.out.println();
     }
-    
+
     private void DFS(Vertex source){
-    
+
     	source.visit();
-    
+
     	if(this.print)System.out.print("("+source.getName()+" ");
-    
+
     	for(Edge e:source.getEdges()){
-    
+
     		if(!e.getDest().visited()){
     			this.DFS(e.getDest());
-    
+
     		}
     		else if(e.getDest().visited() && !e.getDest().explored()){
     			this.cycleExists = true;
-    
+
     		}
     		else{
     			if(e.getDest().visited()&& e.getDest.explored()){
     				System.out.println("Forward edge exists");
-    
+
     			}
     		}
     	}
@@ -219,7 +219,7 @@ public class AdjacencyList<K>{
 
             v.unexplore();
             v.clearDistance();
-            v.clearPredecessor();            
+            v.clearPredecessor();
 
         }
 
@@ -260,43 +260,43 @@ public class AdjacencyList<K>{
     }
 
     public void deleteGraph(){
-    
+
         System.out.println("Deleting Graph");
-    
+
         while(!this.vertexList.isEmpty()){
-    
+
             Vertex v = this.vertexList.get(0);
             System.out.println("Deleting "+v.getName());
             this.removeVertex((K) v.getName());
         }
     }
-   
+
     public void printVertexList(){
-   
+
         for(Vertex v:this.vertexList){
-   
+
             System.out.println(v);
         }
     }
-   
+
     public void computeShortestPath(K source, K destination){
-   
+
         System.out.print("Shortest Path from "+source.toString()+" to "+destination.toString()+" is: ");
         Vertex src = this.findVertex(source);
         Vertex dest = this.findVertex(destination);
-   
+
         if(src==null){
-   
+
             this.missingVertex(source);
             return;
         }
-   
+
         if(dest==null){
-   
+
             this.missingVertex(destination);
             return;
         }
-   
+
         this.traverseBFS(src);
         this.printShortestPath(src,dest);
         System.out.println();
@@ -328,27 +328,27 @@ public class AdjacencyList<K>{
         unvisited.remove(start);
 
         List<Vertex> path = new ArrayList<Vertex>();
-        Queue<Vertex.Edge> edgesAvaliable  = new PriorityQueue<Vertex.Edge>();  
+        Queue<Vertex.Edge> edgesAvaliable  = new PriorityQueue<Vertex.Edge>();
 
         Vertex vertex  = start;
         while(!unvisited.isEmpty()){
 
         	System.out.println(vertex);
-        	
+
         	for (Vertex.Edge e:vertex.getEdges()){
-        	
+
         		if(!unvisited.contains(e.getDest())){
         			edgesAvaliable.add(e);
         		}
-        	
+
         	}
 
             Vertex.Edge e = edgesAvailable.remove();
             cost += e.getCost();
-            path.add(e); 	
-            
+            path.add(e);
+
             vertex = e.getDest();
-            unvisited.remove(vertex); 
+            unvisited.remove(vertex);
 
         }
 	}
